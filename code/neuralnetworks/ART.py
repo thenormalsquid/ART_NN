@@ -82,44 +82,42 @@ class ArtBase(object):
             which holds the weights of the old matrix plus a new category of all
             values of 1.
              """
-            resized_weight = [row.append(1) for row in weight]
-            return resized_weight
+            self.weight = [row.append(1) for row in self.weight]
+            return self.weight
 
 
+        def calculate_match(self, weight_vector):
+            """
+            Perhaps there is a function that returns a weight_vector this can be applied to
+            ART_Calculate_Match    Calculates the match value of an input to a category.
+            MATCH = ART_Calculate_Match(INPUT, WEIGHTVECTOR)
+            This function returns a value which represents the amount of match
+            between the given input and the given category.
+         
+            The input parameters are as follows:
+            The INPUT is a vector of size NumFeatures that contains the input
+            signal into the network. The WEIGHTVECTOR is a matrix of size 
+            NumFeatures which holds the weights of the network for a given
+            category. The length of the INPUT vector must equal the length of
+            the WEIGHTVECTOR.
 
-
-
-def calculate_match(oinput, weight_vector):
-    """
-    ART_Calculate_Match    Calculates the match value of an input to a category.
-    MATCH = ART_Calculate_Match(INPUT, WEIGHTVECTOR)
-    This function returns a value which represents the amount of match
-    between the given input and the given category.
- 
-    The input parameters are as follows:
-    The INPUT is a vector of size NumFeatures that contains the input
-    signal into the network. The WEIGHTVECTOR is a matrix of size 
-    NumFeatures which holds the weights of the network for a given
-    category. The length of the INPUT vector must equal the length of
-    the WEIGHTVECTOR.
-
-    The return parameter is as follows:
-    The MATCH is a measure of the degree of match between the input
-    and the current category.
-    """
-    #weight_vector is a single row matrix
-    num_features = len(oinput)
-    if num_features == len(weight_vector):
-        #Match = |Input^WeightVector| / |Input|
-        match_vector = min(oinput, weight_vector)
-        input_length = sum(oinput)
-        if input_length == 0:
-            match = 0
-        else:
-            match = sum(match_vector) / input_length
-        return match
-    else:
-        return "Input and weight_vector lengths don't match"
+            The return parameter is as follows:
+            The MATCH is a measure of the degree of match between the input
+            and the current category.
+            """
+            #weight_vector is a single row matrix
+            num_features = len(self.input)
+            if num_features == len(weight_vector):
+                #Match = |Input^WeightVector| / |Input|
+                match_vector = min(self.input, weight_vector)
+                input_length = sum(self.input)
+                if input_length == 0:
+                    match = 0
+                else:
+                    match = sum(match_vector) / input_length
+                return match
+            else:
+                return "Input and weight_vector lengths don't match"
 
 
 def categorize(art_network, data):
