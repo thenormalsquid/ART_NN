@@ -65,24 +65,25 @@ class ArtBase(object):
             return self.category_activation
 
 
-def add_new_category(weight):
-    """
-     ART_Add_New_Category    Adds a new category to the given weight matrix.
-    RESIZEDWEIGHT = ART_Add_New_Category(WEIGHT)
-    This function returns a new weight matrix which is identical to the
-    given weight matrix except that it contains one more category which
-    is initialized to all 1's.
- 
-    The input parameter is as follows:
-    The WEIGHT is a matrix of size NumFeatures-by-NumCategories which
-    holds the weights of the network.
-    The return parameter is as follows:
-    The RESIZEDWEIGHT is a matrix of size NumFeatures-by-NumCategories+1
-    which holds the weights of the old matrix plus a new category of all
-    values of 1.
-     """
-    resized_weight = [row.append(1) for row in weight]
-    return resized_weight
+        def add_new_category(self):
+            """
+            Can be called explicitly? ... 
+             ART_Add_New_Category    Adds a new category to the given weight matrix.
+            RESIZEDWEIGHT = ART_Add_New_Category(WEIGHT)
+            This function returns a new weight matrix which is identical to the
+            given weight matrix except that it contains one more category which
+            is initialized to all 1's.
+         
+            The input parameter is as follows:
+            The WEIGHT is a matrix of size NumFeatures-by-NumCategories which
+            holds the weights of the network.
+            The return parameter is as follows:
+            The RESIZEDWEIGHT is a matrix of size NumFeatures-by-NumCategories+1
+            which holds the weights of the old matrix plus a new category of all
+            values of 1.
+             """
+            resized_weight = [row.append(1) for row in weight]
+            return resized_weight
 
 
 
