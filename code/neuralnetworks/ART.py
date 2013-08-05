@@ -2,58 +2,59 @@ import numpy
 
 #perhaps make an ART class in which all of these functions are methods
 
-class Art(object):
+class ArtBase(object):
+
     def __init__(self, oinput, weight):
-        #weight gets adjusted, maybe don't need to add weight here
+        self.input = oinput
+        self.weight = weight
 
+    #may have to change to numpy array if data is large
+    def category_activation(self, bias):
+        #weight is a list of lists which converts to a matrix 
+        #oinput is a vector, which is a list
 
-
-#may have to change to numpy array if data is large
-def category_activation(oinput, weight, bias):
-    #weight is a list of lists which converts to a matrix 
-    #oinput is a vector, which is a list
-
-    """
-    ART_Activate_Categories    Activates the categories in an ART network.
-       CATEGORYACTIVATION = ART_Activate_Categories(INPUT, WEIGHT, BIAS)
-        This function returns a vector of category activations for the given
-        input vector, weight matrix, and bias value.
-     
-        The input parameters are as follows:
-        The INPUT is a vector of size NumFeatures that contains the input
-        signal into the network. 
-        The WEIGHT is a matrix of size NumFeatures-by-NumCategories which holds the weights of the network.
-        The BIAS is the constant that is used to differentiate between very
-        similar category activation values. The length of the INPUT vector
-        must equal the number of rows in the WEIGHT matrix, and the BIAS
-        value must be within the range [0, 1] (although values very near
-        0 are best).
-
-        The return parameter is as follows:
-        The CATEGORYACTIVATION is a vector of size NumCategories that
-        holds the activation value for each category. Returns an array.
-     """
-    num_categories = len(weight[0])
-    if len(oinput) != len(weight):
-        return 'The length of the input and rows of the weights do not match.'
-    elif bias < 0 or bias > 1:
-        return "The bias must be within the range of [0,1]"
-    else:
         """
-        Calculate the activation for each category.
-        This is done according to the following equation:
-        Activation(j) = |Input^Weight(j)| / (bias + |Weight(j)|)
-        """
-        cat = []
-        #weight should be numpy matrix already, but if not, we convert here
-        weight = numpy.matrix(weight)
-        for j in xrange(num_categories):
-            arr = weight[:,j].tolist()
-            col = column(arr,0)
-            match_vector = min(oinput, col)
-            weight_length = sum(col)
-            cat.append(sum(match_vector)/(bias + weight_length))
-    return cat
+        ART_Activate_Categories    Activates the categories in an ART network.
+           CATEGORYACTIVATION = ART_Activate_Categories(INPUT, WEIGHT, BIAS)
+            This function returns a vector of category activations for the given
+            input vector, weight matrix, and bias value.
+         
+            The input parameters are as follows:
+            The INPUT is a vector of size NumFeatures that contains the input
+            signal into the network. 
+            The WEIGHT is a matrix of size NumFeatures-by-NumCategories which holds the weights of the network.
+            The BIAS is the constant that is used to differentiate between very
+            similar category activation values. The length of the INPUT vector
+            must equal the number of rows in the WEIGHT matrix, and the BIAS
+            value must be within the range [0, 1] (although values very near
+            0 are best).
+
+            The return parameter is as follows:
+            The CATEGORYACTIVATION is a vector of size NumCategories that
+            holds the activation value for each category. Returns an array.
+         """
+        num_categories = len(self.weight[0])
+        if len(self.input) != len(self.weight):
+            return 'The length of the input and rows of the weights do not match.'
+        elif bias < 0 or bias > 1:
+            return "The bias must be within the range of [0,1]"
+        else:
+            """
+            Calculate the activation for each category.
+            This is done according to the following equation:
+            Activation(j) = |Input^Weight(j)| / (bias + |Weight(j)|)
+            """
+            cat = []
+            #weight should be numpy matrix already, but if not, we convert here
+            self.weight = numpy.matrix(weight)
+            for j in xrange(num_categories):
+                arr = self.weight[:,j].tolist()
+                col = column(arr,0)
+                match_vector = min(self.input, col)
+                weight_length = sum(col)
+                cat.append(sum(match_vector)/(bias + weight_length))
+        return cat
+
 
 
 #returns a list of matrix columns
