@@ -1,7 +1,16 @@
 import numpy
 
-#perhaps make an ART class in which all of these functions are methods
 
+"""
+Helper functions
+"""
+def column(matrix, i):
+    return [row[i] for row in matrix]
+
+
+
+
+#perhaps make an ART class in which all of these functions are methods
 class ArtBase(object):
 
     def __init__(self, oinput, weight):
@@ -44,7 +53,7 @@ class ArtBase(object):
             This is done according to the following equation:
             Activation(j) = |Input^Weight(j)| / (bias + |Weight(j)|)
             """
-            cat = []
+            self.category_activation = []
             #weight should be numpy matrix already, but if not, we convert here
             self.weight = numpy.matrix(weight)
             for j in xrange(num_categories):
@@ -52,14 +61,8 @@ class ArtBase(object):
                 col = column(arr,0)
                 match_vector = min(self.input, col)
                 weight_length = sum(col)
-                cat.append(sum(match_vector)/(bias + weight_length))
-        return cat
-
-
-
-#returns a list of matrix columns
-def column(matrix, i):
-    return [row[i] for row in matrix]
+                self.category_activation.append(sum(match_vector)/(bias + weight_length))
+            return self.category_activation
 
 
 def add_new_category(weight):
