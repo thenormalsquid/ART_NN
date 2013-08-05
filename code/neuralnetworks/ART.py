@@ -88,7 +88,8 @@ class ArtBase(object):
 
         def calculate_match(self, weight_vector):
             """
-            Perhaps there is a function that returns a weight_vector this can be applied to
+            Perhaps there is a function that returns a weight_vector this can be applied to.
+            Or, we may need a function to do something with the match
             ART_Calculate_Match    Calculates the match value of an input to a category.
             MATCH = ART_Calculate_Match(INPUT, WEIGHTVECTOR)
             This function returns a value which represents the amount of match
@@ -120,6 +121,11 @@ class ArtBase(object):
                 return "Input and weight_vector lengths don't match"
 
 
+
+#need to create a func or object that creates a network of ART objects (list/matrix/etc)
+#this func/object should be called ART_Create_Network, and the param for ArtNetwork is a network of
+#different ART objects 
+#work on this last
 def categorize(art_network, data):
     """
      ART_Categorize    Uses an ART network to categorize the given input data.
